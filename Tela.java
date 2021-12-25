@@ -76,52 +76,87 @@ public class Tela{
 
 
 	public static void listagem(){
-		List<Pessoa> lstPess;
-		             lstPess      = CtrlDado.listaPessoa();
-		DateFormat   dataFmt      = new SimpleDateFormat("dd/MM/yyyy");
-		Scanner      entrada      = new Scanner(System.in);
-		String       opEscolhida  = null; 
-		String       telaListagem = "";
-		Boolean      exibeDados   = true;
-		String       rodapeMSG    = "<-- | <Enter>: Menu Principal | <B>: Lista em Blocos | <L>: Lista em Linhas | -->";
+		
+		Scanner           entrada      = new Scanner(System.in);
+		List<Pessoa>      listaPess;
+		                  listaPess    = CtrlDado.listaPessoa();
 
-		Util.limpaTela();
+		//Para teste durante desenvolvimento///////////////////////////////////////////////////////
+		//List<TestePessoa> listaPess    = new ArrayList<TestePessoa>();
+		
+		String            rodapeMSG    = "\n\n<-- <Enter>: Menu Principal | <B>: Lista em Blocos | <T>: Lista em Tabela | <S>: Página Anterior | <D>: Próxima Página -->";
+		String            opEscolhida  = "";
+		Character         tipoPagina   = 'B'; //B --> Bloco ou T --> Tabela
+		Integer           quantObjPag  = 5; // 5 para Bloco ou 36 para Tabela
 
-		while(exibeDados){
-			if(lstPess.size() != 0){
-				for(Pessoa pess : lstPess){
-					telaListagem += "ID: " + pess.getIdPess() + "\n";
-					telaListagem += "Nome: " + pess.getNome() + "\n";
-					telaListagem += "Fone: " + pess.getFone() + "\n";
-					telaListagem += "Data de Nascimento: " + dataFmt.format(pess.getDtNasc()) + "\n";
-					telaListagem += "Data de Cadastro: " + dataFmt.format(pess.getDtCad()) + "\n";
-					telaListagem += "Data da Ultima Alteração: " + dataFmt.format(pess.getDtUltAlt()) + "\n";
-					
-					if(pess instanceof Aluno){
-						Aluno alu = (Aluno) pess;
-						telaListagem += "Nota Final: " + alu.getNotaFinalCurso() + "\n\n";
-					}
-					else{
-						telaListagem += "\n";
-					}
-				}
-				telaListagem += rodapeMSG;
-			}
-			else{
-				telaListagem = "Nenhum registro encontrado para ser listado !!!\n\n" +
-				               "Tecle <Enter> para retornar ao Menu Principal: ";
+		//comentar próximas 2 linhas para teste durante desenvolvimento
+		Integer           totalPagina  = (listaPess.size() % quantObjPag == 0) 
+		                                 ? (listaPess.size() / quantObjPag) : (listaPess.size() / quantObjPag + 1);
+		Integer           paginaAtual  = 1;
+		Integer           pontPosArray = (paginaAtual - 1) * quantObjPag;
+		
+		
 
-			}
+		//Para teste durante desenvolvimento///////////////////////////////////////////////////////
+		/*for(int cont = 0 ; cont < 100 ; cont++){
+				
+				//TestePessoa testePessoa = new TestePessoa(cont);
+				TesteAluno  testeAluno  = new TesteAluno(cont);
+				//listaPess.add(testePessoa);
+				listaPess.add(testeAluno);
 
-			do{
-				Util.atualizaTela(telaListagem);
-
-				opEscolhida = entrada.nextLine().trim();
-			}while(!opEscolhida.equals(""));
-
-			exibeDados = false;
 
 		}
+
+		Integer totalPagina = (listaPess.size() % quantObjPag == 0) 
+		                      ? (listaPess.size() / quantObjPag) 
+		                      : (listaPess.size() / quantObjPag + 1);*/
+		////////////////////////////////////////////////////////////////////////////////////////////
+		
+		while(true){
+			
+			Util.limpaTela();
+
+			if(tipoPagina == 'B')
+				listaBloco(listaPess, pontPosArray, quantObjPag);
+			if(tipoPagina == 'T')
+				listaTabela(listaPess, pontPosArray, quantObjPag);
+			
+			System.out.println(rodapeMSG + " Pág: " + paginaAtual + "/" + totalPagina);
+			
+			opEscolhida = entrada.nextLine().trim();
+			
+			if(opEscolhida.equals(""))
+				break;
+			if(opEscolhida.equalsIgnoreCase("B")){
+				tipoPagina   = 'B';
+				quantObjPag  = 5;
+				paginaAtual  = 1;
+				pontPosArray = (paginaAtual - 1) * quantObjPag;
+				totalPagina  = (listaPess.size() % quantObjPag == 0) 
+		                       ? (listaPess.size() / quantObjPag) 
+		                       : (listaPess.size() / quantObjPag + 1);
+			}
+			if(opEscolhida.equalsIgnoreCase("T")){
+				tipoPagina   = 'T';
+				quantObjPag  = 36;
+				paginaAtual  = 1;
+				pontPosArray = (paginaAtual - 1) * quantObjPag;
+				totalPagina  = (listaPess.size() % quantObjPag == 0) 
+		                       ? (listaPess.size() / quantObjPag) 
+		                       : (listaPess.size() / quantObjPag + 1);
+			}
+			if(opEscolhida.equalsIgnoreCase("S")){
+				paginaAtual  = (paginaAtual > 1) ? --paginaAtual : paginaAtual;
+				pontPosArray = (paginaAtual - 1) * quantObjPag;
+			}
+			if(opEscolhida.equalsIgnoreCase("D")){
+				paginaAtual  = (paginaAtual < totalPagina) ? ++paginaAtual : paginaAtual;
+				pontPosArray = (paginaAtual - 1) * quantObjPag;
+			}
+
+		}
+
 	}
 
 
@@ -244,11 +279,153 @@ public class Tela{
 		return CtrlDado.excluiPessoa(idPess);
 	}
 
-	private void listaBloco(List<Pessoa> listaPessoa){
-		;
+	private static void listaBloco(List<Pessoa> listaPessoa, Integer indInicio, Integer quantObjListar){
+
+		DateFormat dataFmt =  new SimpleDateFormat("dd/MM/yyyy");
+		Integer     limite =  ( (indInicio + quantObjListar) > listaPessoa.size() ) ? listaPessoa.size() : (indInicio + quantObjListar);
+
+		for( ; indInicio < limite ; indInicio++ ){
+				
+			System.out.println("ID: "                       + listaPessoa.get(indInicio).getIdPess());
+			System.out.println("Nome: "                     + listaPessoa.get(indInicio).getNome());
+			System.out.println("Fone: "                     + listaPessoa.get(indInicio).getFone());
+			System.out.println("Data de Nascimento: "       + dataFmt.format(listaPessoa.get(indInicio).getDtNasc()));
+			System.out.println("Data de Cadastro: "         + dataFmt.format(listaPessoa.get(indInicio).getDtCad()));
+			System.out.println("Data da Ultima Alteração: " + dataFmt.format(listaPessoa.get(indInicio).getDtUltAlt()));
+			
+			if(listaPessoa.get(indInicio) instanceof Aluno){
+				Aluno testeAluno = (Aluno) listaPessoa.get(indInicio);
+				System.out.println("Nota Final: " + testeAluno.getNotaFinalCurso().toString().replace(".", ","));
+			}
+
+			System.out.println();
+		}
+		
 	}
 
-	private void listaLinha(List<Pessoa> listaPessoa){
-		;
+	private static void listaTabela(List<Pessoa> listaPessoa, Integer indInicio, Integer quantObjListar){
+		
+		String cabecalho = "+--------------------------------------------------------------------------------------------------------------------------------------+\n" + 
+		                   "| ID Nº |               Nome da Pessoa / Aluno              |     Fone       | Data Nasc. | Data Cadastro | Atualizado em | Nota Final |\n" + 
+		                   "+--------------------------------------------------------------------------------------------------------------------------------------+";
+
+		String rodape    = "+--------------------------------------------------------------------------------------------------------------------------------------+\n";
+		                  
+		DateFormat dataFmt = new SimpleDateFormat("dd/MM/yyyy");
+		Integer     limite =  ( (indInicio + quantObjListar) > listaPessoa.size() ) ? listaPessoa.size() : (indInicio + quantObjListar);
+
+		System.out.println(cabecalho);
+		
+		for( ; indInicio < limite ; indInicio++ ){
+				
+			System.out.print("| " + String.format("%05d", listaPessoa.get(indInicio).getIdPess()) + " ");
+			System.out.print("| " + listaPessoa.get(indInicio).getNome() + " ".repeat(50 - listaPessoa.get(indInicio).getNome().length()));
+			System.out.print("| " + listaPessoa.get(indInicio).getFone() + " ".repeat(15 - listaPessoa.get(indInicio).getFone().length()));
+			System.out.print("| " + dataFmt.format(listaPessoa.get(indInicio).getDtNasc()) + " ");
+			System.out.print("|  " + dataFmt.format(listaPessoa.get(indInicio).getDtCad()) + "   ");
+			System.out.print("|  " + dataFmt.format(listaPessoa.get(indInicio).getDtUltAlt()) + "   ");
+			
+			if(listaPessoa.get(indInicio) instanceof Aluno){
+				Aluno aluno = (Aluno) listaPessoa.get(indInicio);
+				int espaco, espacoAnt, espacoPost;
+				//espaco = 10 - testeAluno.getNotaFinalCurso().toString().length();
+				espaco = 10 - String.format("%.0f", aluno.getNotaFinalCurso()).length();
+				espacoAnt = espaco / 2;
+				espacoPost = (espaco % 2 != 0) ? espacoAnt + 1 : espacoAnt;
+
+				//System.out.println("Espaco, espacoAnt, espacoPost: " + espaco + " " + espacoAnt + " " + espacoPost );
+
+				//System.out.print("| " + " ".repeat(espacoAnt) + testeAluno.getNotaFinalCurso().toString().replace(".", ",") + " ".repeat(espacoPost) + " |");
+				System.out.print("| " + " ".repeat(espacoAnt) + String.format("%.0f", aluno.getNotaFinalCurso()) + " ".repeat(espacoPost) + " |");
+			}
+			else{
+				System.out.print("| Não Aluno  |");
+			}
+
+			System.out.println();
+		}
+
+		System.out.print(rodape);
+
 	}
 }
+
+
+
+
+
+/*public static void listagem(){
+		List<Pessoa> lstPess;
+		             lstPess      = CtrlDado.listaPessoa();
+		DateFormat   dataFmt      = new SimpleDateFormat("dd/MM/yyyy");
+		Scanner      entrada      = new Scanner(System.in);
+		String       opEscolhida  = null; 
+		String       telaListagem = "";
+		Boolean      exibeDados   = true;
+		String       rodapeMSG    = "<-- | <Enter>: Menu Principal | <B>: Lista em Blocos | <L>: Lista em Linhas | -->";
+
+		Util.limpaTela();
+
+		while(exibeDados){
+			if(lstPess.size() != 0){
+				for(Pessoa pess : lstPess){
+					telaListagem += "ID: " + pess.getIdPess() + "\n";
+					telaListagem += "Nome: " + pess.getNome() + "\n";
+					telaListagem += "Fone: " + pess.getFone() + "\n";
+					telaListagem += "Data de Nascimento: " + dataFmt.format(pess.getDtNasc()) + "\n";
+					telaListagem += "Data de Cadastro: " + dataFmt.format(pess.getDtCad()) + "\n";
+					telaListagem += "Data da Ultima Alteração: " + dataFmt.format(pess.getDtUltAlt()) + "\n";
+					
+					if(pess instanceof Aluno){
+						Aluno alu = (Aluno) pess;
+						telaListagem += "Nota Final: " + alu.getNotaFinalCurso() + "\n\n";
+					}
+					else{
+						telaListagem += "\n";
+					}
+				}
+				telaListagem += rodapeMSG;
+			}
+			else{
+				telaListagem = "Nenhum registro encontrado para ser listado !!!\n\n" +
+				               "Tecle <Enter> para retornar ao Menu Principal: ";
+
+			}
+
+			do{
+				Util.atualizaTela(telaListagem);
+
+				opEscolhida = entrada.nextLine().trim();
+			}while(!opEscolhida.equals(""));
+
+			exibeDados = false;
+
+		}
+	}*/
+
+	/*private static String listaBloco(List<TestePessoa> listaPessoa, Integer indInicio, Integer quantObjListar){
+
+		String lista = "";
+		DateFormat dataFmt = new SimpleDateFormat("dd/MM/yyyy");
+		Integer limite = ( quantObjListar > listaPessoa.size() ) ? listaPessoa.size() : quantObjListar;
+
+		for(int cont =0 ; cont < limite ; cont++){
+				
+			lista += "ID: "                       + listaPessoa.get(cont).getIdPess() + "\n";
+			lista += "Nome: "                     + listaPessoa.get(cont).getNome() + "\n";
+			lista += "Fone: "                     + listaPessoa.get(cont).getFone() + "\n";
+			lista += "Data de Nascimento: "       + dataFmt.format(listaPessoa.get(cont).getDtNasc()) + "\n";
+			lista += "Data de Cadastro: "         + dataFmt.format(listaPessoa.get(cont).getDtCad()) + "\n";
+			lista += "Data da Ultima Alteração: " + dataFmt.format(listaPessoa.get(cont).getDtUltAlt()) + "\n";
+			
+			if(listaPessoa.get(cont) instanceof TesteAluno){
+				TesteAluno testeAluno = (TesteAluno) listaPessoa.get(cont);
+				lista += "Nota Final: " + testeAluno.getNotaFinalCurso() + "\n";
+			}
+
+			lista += "\n";
+		}
+
+		return lista;
+		
+	}*/

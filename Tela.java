@@ -45,7 +45,7 @@ public class Tela{
 		}
 
 		if(pessoaAluno == aluno){
-			if(Util.processaDados(notaFinal)) System.out.println("Nota final: " + notaFinal[3].replace(".", ","));
+			if(Util.processaDados(notaFinal)) System.out.println("Nota final: " + Util.trimNum(notaFinal[3]).replace(".", ","));
 		}
 
 		while(confirmaCadastro == -1){
@@ -112,48 +112,62 @@ public class Tela{
 		                      ? (listaPess.size() / quantObjPag) 
 		                      : (listaPess.size() / quantObjPag + 1);*/
 		////////////////////////////////////////////////////////////////////////////////////////////
-		
-		while(true){
-			
-			Util.limpaTela();
 
-			if(tipoPagina == 'B')
-				listaBloco(listaPess, pontPosArray, quantObjPag);
-			if(tipoPagina == 'T')
-				listaTabela(listaPess, pontPosArray, quantObjPag);
-			
-			System.out.println(rodapeMSG + " Pág: " + paginaAtual + "/" + totalPagina);
-			
-			opEscolhida = entrada.nextLine().trim();
-			
-			if(opEscolhida.equals(""))
-				break;
-			if(opEscolhida.equalsIgnoreCase("B")){
-				tipoPagina   = 'B';
-				quantObjPag  = 5;
-				paginaAtual  = 1;
-				pontPosArray = (paginaAtual - 1) * quantObjPag;
-				totalPagina  = (listaPess.size() % quantObjPag == 0) 
-		                       ? (listaPess.size() / quantObjPag) 
-		                       : (listaPess.size() / quantObjPag + 1);
+		if(listaPess.size() > 0){
+		
+			while(true){
+				
+				Util.limpaTela();
+
+				if(tipoPagina == 'B')
+					listaBloco(listaPess, pontPosArray, quantObjPag);
+				if(tipoPagina == 'T')
+					listaTabela(listaPess, pontPosArray, quantObjPag);
+				
+				System.out.println(rodapeMSG + " Pág: " + paginaAtual + "/" + totalPagina);
+				
+				opEscolhida = entrada.nextLine().trim();
+				
+				if(opEscolhida.equals(""))
+					break;
+				if(opEscolhida.equalsIgnoreCase("B")){
+					tipoPagina   = 'B';
+					quantObjPag  = 5;
+					paginaAtual  = 1;
+					pontPosArray = (paginaAtual - 1) * quantObjPag;
+					totalPagina  = (listaPess.size() % quantObjPag == 0) 
+			                       ? (listaPess.size() / quantObjPag) 
+			                       : (listaPess.size() / quantObjPag + 1);
+				}
+				if(opEscolhida.equalsIgnoreCase("T")){
+					tipoPagina   = 'T';
+					quantObjPag  = 36;
+					paginaAtual  = 1;
+					pontPosArray = (paginaAtual - 1) * quantObjPag;
+					totalPagina  = (listaPess.size() % quantObjPag == 0) 
+			                       ? (listaPess.size() / quantObjPag) 
+			                       : (listaPess.size() / quantObjPag + 1);
+				}
+				if(opEscolhida.equalsIgnoreCase("S")){
+					paginaAtual  = (paginaAtual > 1) ? --paginaAtual : paginaAtual;
+					pontPosArray = (paginaAtual - 1) * quantObjPag;
+				}
+				if(opEscolhida.equalsIgnoreCase("D")){
+					paginaAtual  = (paginaAtual < totalPagina) ? ++paginaAtual : paginaAtual;
+					pontPosArray = (paginaAtual - 1) * quantObjPag;
+				}
+
 			}
-			if(opEscolhida.equalsIgnoreCase("T")){
-				tipoPagina   = 'T';
-				quantObjPag  = 36;
-				paginaAtual  = 1;
-				pontPosArray = (paginaAtual - 1) * quantObjPag;
-				totalPagina  = (listaPess.size() % quantObjPag == 0) 
-		                       ? (listaPess.size() / quantObjPag) 
-		                       : (listaPess.size() / quantObjPag + 1);
-			}
-			if(opEscolhida.equalsIgnoreCase("S")){
-				paginaAtual  = (paginaAtual > 1) ? --paginaAtual : paginaAtual;
-				pontPosArray = (paginaAtual - 1) * quantObjPag;
-			}
-			if(opEscolhida.equalsIgnoreCase("D")){
-				paginaAtual  = (paginaAtual < totalPagina) ? ++paginaAtual : paginaAtual;
-				pontPosArray = (paginaAtual - 1) * quantObjPag;
-			}
+		}
+		else{
+
+			Util.limpaTela();
+			System.out.print("\n\n\n\n\n");
+			System.out.println("\t+=======================================================+\n" + 
+				               "\t|      Nenhum registro existente de Pessoa/Aluno !!!    |\n" + 
+				               "\t|                <Enter> volta ao menu.                 |\n" + 
+				               "\t+=======================================================+\n");
+			entrada.nextLine().trim();
 
 		}
 
@@ -225,7 +239,7 @@ public class Tela{
 		
 		if(notaFinal[3] != null){
 			telaAtualizacao += "Nota Final: @3\n";
-			substVar.add(notaFinal[3].replace(".", ","));
+			substVar.add(Util.trimNum(notaFinal[3]).replace(".", ","));
 		}
 
 		Util.atualizaTela(telaAtualizacao, substVar);
@@ -236,7 +250,7 @@ public class Tela{
 		
 		if(notaFinal[3] != null){
 			if(Util.processaDados(notaFinal)){ 
-				substVar.set(3, notaFinal[3].replace(".", ",")); 
+				substVar.set(3, Util.trimNum(notaFinal[3]).replace(".", ",")); 
 				Util.atualizaTela(telaAtualizacao, substVar); 
 			} 
 			else {
@@ -272,11 +286,31 @@ public class Tela{
 	public static Boolean exclusao(){
 		
 		Integer idPess;
+
+		String[] iD = new String[]{"Informe o número de ID:", "Exclusão Pessoa/Aluno(a)", "id", null};
+		Util.limpaTela();
+		System.out.print("*** Exclusão de Pessoa / Aluno ***");
+		Util.processaDados(iD);
+		if(iD[3] != null){
+			idPess = Integer.parseInt(iD[3]);
+			if(CtrlDado.excluiPessoa(idPess)){
+				JOptionPane.showMessageDialog(null, "Pessoa/Aluno(a) com ID: " +  String.format("%05d", idPess) + " excluído(a)!", 
+								              "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				return true;
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Pessoa/Aluno(a) com ID: " +  String.format("%05d", idPess) + " não localizado(a)!", 
+								              "Aviso", JOptionPane.INFORMATION_MESSAGE);
+			}
+
+		}
 		
-		Scanner entrada = new Scanner(System.in);
+		/*Scanner entrada = new Scanner(System.in);
 		System.out.print("Informe o ID da Pessoa/Aluno para excluir: ");
 		idPess = entrada.nextInt();
-		return CtrlDado.excluiPessoa(idPess);
+		return CtrlDado.excluiPessoa(idPess);*/
+
+		return false;
 	}
 
 	private static void listaBloco(List<Pessoa> listaPessoa, Integer indInicio, Integer quantObjListar){
@@ -286,16 +320,16 @@ public class Tela{
 
 		for( ; indInicio < limite ; indInicio++ ){
 				
-			System.out.println("ID: "                       + listaPessoa.get(indInicio).getIdPess());
+			System.out.println("ID: "                       + String.format("%05d", listaPessoa.get(indInicio).getIdPess())); //listaPessoa.get(indInicio).getIdPess());
 			System.out.println("Nome: "                     + listaPessoa.get(indInicio).getNome());
 			System.out.println("Fone: "                     + listaPessoa.get(indInicio).getFone());
 			System.out.println("Data de Nascimento: "       + dataFmt.format(listaPessoa.get(indInicio).getDtNasc()));
 			System.out.println("Data de Cadastro: "         + dataFmt.format(listaPessoa.get(indInicio).getDtCad()));
-			System.out.println("Data da Ultima Alteração: " + dataFmt.format(listaPessoa.get(indInicio).getDtUltAlt()));
+			System.out.println("Data da Última Alteração: " + dataFmt.format(listaPessoa.get(indInicio).getDtUltAlt()));
 			
 			if(listaPessoa.get(indInicio) instanceof Aluno){
 				Aluno testeAluno = (Aluno) listaPessoa.get(indInicio);
-				System.out.println("Nota Final: " + testeAluno.getNotaFinalCurso().toString().replace(".", ","));
+				System.out.println("Nota Final: " + Util.trimNum(testeAluno.getNotaFinalCurso().toString()).replace(".", ","));
 			}
 
 			System.out.println();
@@ -318,7 +352,7 @@ public class Tela{
 		
 		for( ; indInicio < limite ; indInicio++ ){
 				
-			System.out.print("| " + String.format("%05d", listaPessoa.get(indInicio).getIdPess()) + " ");
+			System.out.print("| " +  String.format("%05d", listaPessoa.get(indInicio).getIdPess()) + " ");
 			System.out.print("| " + listaPessoa.get(indInicio).getNome() + " ".repeat(50 - listaPessoa.get(indInicio).getNome().length()));
 			System.out.print("| " + listaPessoa.get(indInicio).getFone() + " ".repeat(15 - listaPessoa.get(indInicio).getFone().length()));
 			System.out.print("| " + dataFmt.format(listaPessoa.get(indInicio).getDtNasc()) + " ");
@@ -329,14 +363,16 @@ public class Tela{
 				Aluno aluno = (Aluno) listaPessoa.get(indInicio);
 				int espaco, espacoAnt, espacoPost;
 				//espaco = 10 - testeAluno.getNotaFinalCurso().toString().length();
-				espaco = 10 - String.format("%.0f", aluno.getNotaFinalCurso()).length();
+				//espaco = 10 - String.format("%3.2f", aluno.getNotaFinalCurso()).length();
+				espaco = 10 - Util.trimNum(aluno.getNotaFinalCurso().toString()).replace(".", ",").length();
 				espacoAnt = espaco / 2;
 				espacoPost = (espaco % 2 != 0) ? espacoAnt + 1 : espacoAnt;
 
 				//System.out.println("Espaco, espacoAnt, espacoPost: " + espaco + " " + espacoAnt + " " + espacoPost );
 
 				//System.out.print("| " + " ".repeat(espacoAnt) + testeAluno.getNotaFinalCurso().toString().replace(".", ",") + " ".repeat(espacoPost) + " |");
-				System.out.print("| " + " ".repeat(espacoAnt) + String.format("%.0f", aluno.getNotaFinalCurso()) + " ".repeat(espacoPost) + " |");
+				//System.out.print("| " + " ".repeat(espacoAnt) + String.format("%3.2f", aluno.getNotaFinalCurso()) + " ".repeat(espacoPost) + " |");
+				System.out.print("| " + " ".repeat(espacoAnt) + Util.trimNum(aluno.getNotaFinalCurso().toString()).replace(".", ",") + " ".repeat(espacoPost) + " |");
 			}
 			else{
 				System.out.print("| Não Aluno  |");

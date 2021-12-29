@@ -2,6 +2,7 @@ package br.com.ferreira.crudpessalu.view;
 
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -87,6 +88,7 @@ public class Util{
 	
 	public static String entradaDado(String dadoMsg, String titulo, String tipoValidacao, String conteudo){
 
+		UIManager.put("OptionPane.cancelButtonText", "Cancelar");
 		String   entradaDado;
 		Short    validaDado;
 		Integer  cancelOp       = -1;
@@ -124,10 +126,22 @@ public class Util{
 						validaDado = validaData(entradaDado);
 						if(validaDado == 0){
 							entradaDado = entradaDado.replace("-", "/");
-							return entradaDado;
+							return dataParaTxt(txtParaData(entradaDado));
 						}
-						else{
+						if(validaDado == 1){
 							JOptionPane.showMessageDialog(null, "Formato de dado inválido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+						}
+						if(validaDado == 3){
+							JOptionPane.showMessageDialog(null, "Formato de dado inválido " + entradaDado + "\nMês válido é de 01 a 12.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+						}
+						if(validaDado == 4){
+							JOptionPane.showMessageDialog(null, "Formato de dado inválido " + entradaDado + "\nDia do mês não é válido.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+						}
+						if(validaDado == 5){
+							JOptionPane.showMessageDialog(null, "O ano informado não é bissexto!!! " + entradaDado + "\nMês de fevereiro para este ano possui somente 28 dias.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+						}
+						if(validaDado == 6){
+							JOptionPane.showMessageDialog(null, "Data inválida " + entradaDado + "\nData informada é superior ao dia de hoje.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -180,7 +194,7 @@ public class Util{
 	
 	public static Boolean processaDados(String[] dados){
 
-		String resultEntradaDado = entradaDado(dados[0], dados[1], dados[2], dados[3]);
+		String resultEntradaDado = entradaDado(dados[0], dados[1], dados[2], trimNum(dados[3]));
 		
 		if(resultEntradaDado != null){
 			dados[3] = resultEntradaDado;
@@ -225,11 +239,69 @@ public class Util{
 	public static Short validaData(String data){
 
 		String expRegData = "(\\d{1}|\\d{2})[/](\\d{1}|\\d{2})[/]\\d{4}@(\\d{1}|\\d{2})[-](\\d{1}|\\d{2})[-]\\d{4}";
-		
+		Date hoje = new Date();
+		String[] hojeDiaMesAno = dataParaTxt(hoje).split("/");
+
 		if(!validaDadoExpReg(data, expRegData))
 			return 1; //formato inválido de data
-		else
-			return 0;
+
+		String[] diaMesAno = data.replace("-", "/").split("/");
+		
+		if(Integer.parseInt(diaMesAno[0]) == 0 || Integer.parseInt(diaMesAno[1]) == 0 || Integer.parseInt(diaMesAno[2]) == 0)
+			return 1;
+
+		if(Integer.parseInt(diaMesAno[1]) > 12)
+			return 3;
+		
+		if((Integer.parseInt(diaMesAno[1]) == 2 || Integer.parseInt(diaMesAno[1]) == 4 || Integer.parseInt(diaMesAno[1]) == 6 || 
+		    Integer.parseInt(diaMesAno[1]) == 9 || Integer.parseInt(diaMesAno[1]) == 11) && Integer.parseInt(diaMesAno[0]) > 30){
+			return 4;
+		}
+		else if(Integer.parseInt(diaMesAno[0]) > 31){
+			return 4;
+		}
+
+		if(!anoBissexto(Integer.parseInt(diaMesAno[2])) && Integer.parseInt(diaMesAno[1]) == 2 && Integer.parseInt(diaMesAno[0]) > 28)
+			return 5;
+
+		if(Integer.parseInt(diaMesAno[1]) == 2 && Integer.parseInt(diaMesAno[0]) > 29)
+			return 4;
+		
+		if(Integer.parseInt(diaMesAno[2]) > Integer.parseInt(hojeDiaMesAno[2]))
+			return 6;
+
+		if(Integer.parseInt(diaMesAno[2]) == Integer.parseInt(hojeDiaMesAno[2]) && Integer.parseInt(diaMesAno[1]) > Integer.parseInt(hojeDiaMesAno[1]))
+			return 6;
+
+		if(Integer.parseInt(diaMesAno[2]) == Integer.parseInt(hojeDiaMesAno[2]) 
+		   && Integer.parseInt(diaMesAno[1]) == Integer.parseInt(hojeDiaMesAno[1]) 
+		   && Integer.parseInt(diaMesAno[0]) > Integer.parseInt(hojeDiaMesAno[0]))
+			return 6;
+
+
+
+
+		return 0;
+
+	}
+
+	public static Boolean anoBissexto(Integer ano){
+		
+		if(ano < 1)
+			return false;
+
+		if(ano % 4 == 0 )
+			if(ano % 100 != 0)
+				return true;
+
+		if(ano % 4 != 0)
+			if(ano % 400 == 0)
+				return true;
+
+		if(ano % 400 == 0)
+        	return true;
+		
+		return false;
 
 	}
 
@@ -299,6 +371,27 @@ public class Util{
 			return 1; //formato inválido de ID
 		
 		return 0;
+	}
+
+	public static String trimNum(String sNum){
+
+		String sNumAux = sNum;
+		Double dNum = 0.0;
+		
+		if(sNum == null) return null;
+		
+		try{
+			dNum = Double.parseDouble(sNum.replace(",", "."));
+		}
+		catch(Exception e)
+		{
+			return sNumAux;
+		}
+        
+        sNum = dNum.toString();
+        sNum = (sNum.endsWith(".0")) ? sNum.substring(0, sNum.length()-2) :sNum;
+        return sNum;
+
 	}
 
 }

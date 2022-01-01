@@ -17,7 +17,7 @@ public class CrudPessAlu{
 			                               "\t1. Cadastrar\n\t2. Listar\n\t3. Atualizar\n\t4. Excluir\n\t5. Sair\n\n", //Opções do Menu
 			                               "1", "2", "3", "4", "5"}; //chaves de escolha do menu*/
 
-			String[] opMenu = new String[]{"\n\n" + 
+			String[] opMenu = new String[]{"\n\n" + Util.logo(7, false) + "\n" +
 				                           "    **********************************************\n" + 
 			                               "    **   Digite um número de 1 a 5 e <enter>,   **\n" + 
 			                               "    **    para selecionar uma opção do menu     **\n" + 
@@ -54,6 +54,7 @@ public class CrudPessAlu{
 				case 5:  System.exit(0);
 
 			}
+			
 		}
  
 	}

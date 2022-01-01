@@ -108,12 +108,22 @@ public class Util{
 							return entradaDado;
 						}
 						else{
-							JOptionPane.showMessageDialog(null, "Formato de dado inválido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Nome não informado " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
 					if(tipoValidacao.equals("fn")){
 						validaDado = validaFone(entradaDado);
+						if(validaDado == 0){
+							return entradaDado;
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "Formato de dado inválido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+					if(tipoValidacao.equals("fp")){
+						validaDado = validaFonePesquisa(entradaDado);
 						if(validaDado == 0){
 							return entradaDado;
 						}
@@ -221,13 +231,24 @@ public class Util{
 
 	public static Short validaNome(String nome){
 
-		return 0;
+		return (short) (nome.equals("") ? 1 : 0);
 
 	}
 
 	public static Short validaFone(String fone){
 
 		String expRegFone = "[(]\\d{2}[)](\\d{4}|\\d{5})[-]\\d{4}";
+		
+		if(!validaDadoExpReg(fone, expRegFone))
+			return 1; //formato inválido de telefone
+		else
+			return 0;
+
+	}
+
+	public static Short validaFonePesquisa(String fone){
+
+		String expRegFone = "[(]\\d{2}[)](\\d{4}|\\d{5})[-]\\d{4}@\\d{1,11}";
 		
 		if(!validaDadoExpReg(fone, expRegFone))
 			return 1; //formato inválido de telefone
@@ -389,8 +410,19 @@ public class Util{
 		}
         
         sNum = dNum.toString();
-        sNum = (sNum.endsWith(".0")) ? sNum.substring(0, sNum.length()-2) :sNum;
+        sNum = (sNum.endsWith(".0")) ? sNum.substring(0, sNum.length()-2).replace(".", ",") :sNum.replace(".", ",");
         return sNum;
+
+	}
+
+	public static String logo(Integer espacoEsq, Boolean random){
+
+		String logo = " ".repeat(espacoEsq) + "######  ######   ##   ##  ######     #\n"   +
+		              " ".repeat(espacoEsq) + "##      ##   ##  ##   ##  ##   ##  #####\n" +
+		              " ".repeat(espacoEsq) + "##      #####    ##   ##  ##   ##    #\n"   +
+		              " ".repeat(espacoEsq) + "######  ##  ##    #####   ######   praTi\n";
+
+		return logo;
 
 	}
 

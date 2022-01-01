@@ -5,6 +5,7 @@ import br.com.ferreira.crudpessalu.view.Util;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -16,6 +17,50 @@ public class CtrlDado{
 	
 	public static List<Pessoa> listaPessoa(){
 		return lstPess;
+	}
+
+	public static List<Pessoa> pesqPorNome(String nome){
+		
+		List<Pessoa> lstPorNome = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getNome().toLowerCase().contains(nome.toLowerCase()))
+				lstPorNome.add(pessoa);
+		
+		return lstPorNome;
+	}
+
+	public static List<Pessoa> pesqPorFone(String fone){
+		
+		List<Pessoa> lstPorFone = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getFone().replaceAll("[()-]", "").contains(fone.replaceAll("[()-]", "")))
+				lstPorFone.add(pessoa);
+		
+		return lstPorFone;
+	}
+
+	public static List<Pessoa> pesqSoAluno(){
+
+		List<Pessoa> lstSoAluno = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa instanceof Aluno)
+				lstSoAluno.add(pessoa);
+		
+		return lstSoAluno;
+	}
+
+	public static List<Pessoa> pesqNaoAluno(){
+
+		List<Pessoa> lstNaoAluno = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(!(pessoa instanceof Aluno))
+				lstNaoAluno.add(pessoa);
+		
+		return lstNaoAluno;
 	}
 
 	public static Boolean cadastraPessoa(String[] dadosCadastro){
@@ -110,8 +155,69 @@ public class CtrlDado{
 
 		for(Pessoa pessoa : lstPess)
 			if(pessoa.getIdPess() == idPess)
-				return pessoa;;
+				return pessoa;
 		return null;
 
 	}
+
+	public static List<Pessoa> pesqFaixaId(Integer inicioId, Integer fimId){
+
+		List<Pessoa> lstFxId = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getIdPess() >= inicioId && pessoa.getIdPess() <= fimId)
+				lstFxId.add(pessoa);
+		
+		return lstFxId;
+
+	}
+
+	public static List<Pessoa> pesqFaixaDtNasc(Date inicioData, Date fimData){
+
+		List<Pessoa> lstFxDtNasc = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getDtNasc().compareTo(inicioData) >= 0 && pessoa.getDtNasc().compareTo(fimData) <= 0)
+				lstFxDtNasc.add(pessoa);
+		
+		return lstFxDtNasc;
+
+	}
+
+	public static List<Pessoa> pesqFaixaDtCad(Date inicioData, Date fimData){
+
+		List<Pessoa> lstFxDtCad = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getDtCad().compareTo(inicioData) >= 0 && pessoa.getDtCad().compareTo(fimData) <= 0)
+				lstFxDtCad.add(pessoa);
+		
+		return lstFxDtCad;
+
+	}
+
+	public static List<Pessoa> pesqFaixaDtAtu(Date inicioData, Date fimData){
+
+		List<Pessoa> lstFxDtAtu = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa.getDtUltAlt().compareTo(inicioData) >= 0 && pessoa.getDtUltAlt().compareTo(fimData) <= 0)
+				lstFxDtAtu.add(pessoa);
+		
+		return lstFxDtAtu;
+
+	}
+
+	public static List<Pessoa> pesqFaixaNotaFinal(Float inicioNotaFinal, Float fimNotaFinal){
+
+		List<Pessoa> lstFxNtFinal = new ArrayList<Pessoa>();
+
+		for(Pessoa pessoa : lstPess)
+			if(pessoa instanceof Aluno)
+				if(((Aluno)pessoa).getNotaFinalCurso() >= inicioNotaFinal && ((Aluno)pessoa).getNotaFinalCurso() <= fimNotaFinal)
+					lstFxNtFinal.add(pessoa);
+		
+		return lstFxNtFinal;
+	}
+
 }

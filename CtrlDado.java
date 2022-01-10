@@ -96,10 +96,10 @@ public class CtrlDado{
 
   		if(dadosCadastro[5] == null)
   			pessoa = acessoPessAlu.criaPessoa(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
-	                                          Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
-	                                          Util.txtParaData(dadosCadastro[4]));
-        else
-        	aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
+                                              Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
+                                              Util.txtParaData(dadosCadastro[4]));
+       else
+            aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
 	                                         Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
 	                                         Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));
 
@@ -146,9 +146,9 @@ public class CtrlDado{
   			pessAtulz = acessoPessAlu.atualizaPessoa(pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
   			                                         Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]));
         else
-        	pessAtulz  = acessoPessAlu.atualizaAluno((Aluno) pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
-        	                                         Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
-        	                                         Util.txtParaNota(dadosAtualiza[5]));
+            pessAtulz  = acessoPessAlu.atualizaAluno((Aluno) pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
+                                                     Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
+                                                     Util.txtParaNota(dadosAtualiza[5]));
 
 
 		for(int pos = 0 ; pos < lstPess.size() ; pos++)

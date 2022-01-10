@@ -1,3 +1,14 @@
+/**
+ * aplicação CRUD +praTi
+ * 
+ * Classe Util que possui métodos utilitários estáticos,
+ * permitindo a execução de tarefas comuns a execução da aplicação.
+ * 
+ *@author  Luciano J. Ferreira
+ *@version 1.00 12/2021 
+ */
+
+
 package br.com.ferreira.crudpessalu.view;
 
 import java.util.Scanner;
@@ -12,6 +23,12 @@ import br.com.ferreira.crudpessalu.controller.CtrlDado;
 
 public class Util{
 
+	//Método que exibe e monitora a opção escolhida do menu definido em 
+	//um array de String, onde o primeiro elemento do array define um  
+	//cabeçalho para o menu, o segundo elemento define a aparência do menu 
+	//e os demais elementos as chaves de escolha do menu.
+	//Retorna a opção escolhida (chave) como uma String.
+	
 	public static String menu(String[] opMenu){
 
 		if(opMenu.length < 3) return null;
@@ -38,15 +55,29 @@ public class Util{
 
 		}
 
-		//escolhaMenu.close();
 		return opEscolhida;
 	}
 
+	
+	
+	//Método que permite atualizar o conteúdo da tela em modo texto
+	//por meio de uma String que fornece o conteúdo a ser exibido, 
+	//evitando a rolagem da tela.
 	
 	public static void atualizaTela(String tela){
 		limpaTela();
 		System.out.print(tela);
 	}
+
+	
+	//Método que permite atualizar o conteúdo da tela em modo texto
+	//por meio de uma String que fornece o conteúdo a ser exibido, 
+	//evitando a rolagem da tela. Marcadores presentes na String tela
+	//identificados por @ seguidos por um índice de um array de 
+	//String[] substVar, substituem tais posições na String tela 
+	//pelo conteúdo presente na posição do array substVar.
+	//(útil para a passagem de valores armazenados em variáveis 
+	//durante a entrada de dados pelo usuário)
 
 	public static void atualizaTela(String tela, String[] substVar){
 		limpaTela();
@@ -57,6 +88,12 @@ public class Util{
 		}
 		System.out.print(tela);
 	}
+
+	
+
+	//Método que possui a mesma funcionalidade do anterior
+	//mas utilizando ArrayList para fornecer valores de variáveis 
+	//para substituir posições na String tela.
 
 	public static void atualizaTela(String tela, List<String> substVar){
 		limpaTela();
@@ -69,9 +106,11 @@ public class Util{
 	}
 
 	
+
+	//Método que permite limpar a tela em modo texto.
+
 	public static void limpaTela(){
 
-		//Limpa a tela no windows, no linux e no MacOS
 		try{
         
         if (System.getProperty("os.name").contains("Windows"))
@@ -86,6 +125,16 @@ public class Util{
 	}
 
 	
+	//O método seguinte permite a entrada e, a validação de dados 
+	//no momento em que são informados pelo usuário, em uma caixa de diálogo.
+	//Os parâmetros do método permitem que seja informado uma mensagem 
+	//para solicitação do dado ao usuário, um título para a caixa de diálogo, 
+	//o tipo de validação a ser executada e um conteúdo pré-existente para ser 
+	//exibido no campo de entrada do dado, respectivamente.
+	//Retorna uma String representado o dado fornecido pelo usuário.
+	//Caso ocorra algum erro, a validação não aceite o dado ou a entrada 
+	//seja cancelada pelo usuário, retorna null.
+
 	public static String entradaDado(String dadoMsg, String titulo, String tipoValidacao, String conteudo){
 
 		UIManager.put("OptionPane.cancelButtonText", "Cancelar");
@@ -202,6 +251,13 @@ public class Util{
 	}
 
 	
+
+	//processaDados aciona o método entradaDado passando 4 posiçoes de um array
+	//que armazena informações a serem utilizadas por entradaDado.
+	//Armazena a String retornada por processaDados na posição 3 do array 
+	//utilizado como argumento na chamada do método, retornando true.
+	//Se entradaDado retornar null, retorna false.
+
 	public static Boolean processaDados(String[] dados){
 
 		String resultEntradaDado = entradaDado(dados[0], dados[1], dados[2], trimNum(dados[3]));
@@ -216,6 +272,14 @@ public class Util{
 	}
 
 
+	
+	//Este método recebe um dado como String, 
+	//e uma ou mais expressões regulares dentro 
+	//de outra String separadas por @.
+	//Em seguida testa o dado contra as expressões,
+	//se o dado for válido para alguma delas retorna true,
+	//caso não valide em nenhuma delas retorna false.
+
 	public static Boolean validaDadoExpReg(String dado, String ExpReg){
 
 		if(ExpReg.contains("@")){
@@ -229,11 +293,20 @@ public class Util{
 			return dado.matches(ExpReg);
 	}
 
+	
+	//Verifica se foi fornecido algum nome,
+	//se sim retorna 0, caso contrário retorna 1.
+
 	public static Short validaNome(String nome){
 
 		return (short) (nome.equals("") ? 1 : 0);
 
 	}
+
+	
+
+
+	//Valida o formato do dado sobre o telefone.
 
 	public static Short validaFone(String fone){
 
@@ -246,6 +319,9 @@ public class Util{
 
 	}
 
+	
+	//Valida o formato de dado para pesquisa parcial sobre o telefone.
+
 	public static Short validaFonePesquisa(String fone){
 
 		String expRegFone = "[(]\\d{2}[)](\\d{4}|\\d{5})[-]\\d{4}@\\d{1,11}";
@@ -256,6 +332,10 @@ public class Util{
 			return 0;
 
 	}
+
+	
+
+	//Método para validar data fornecida.
 
 	public static Short validaData(String data){
 
@@ -306,25 +386,28 @@ public class Util{
 
 	}
 
+	
+	//Testa se o ano informado é bissexto
+	//retornado true se verdadeiro e false caso contário.
+
 	public static Boolean anoBissexto(Integer ano){
 		
 		if(ano < 1)
 			return false;
 
+		if(ano % 400 == 0)
+        	return true;
+
 		if(ano % 4 == 0 )
 			if(ano % 100 != 0)
 				return true;
 
-		if(ano % 4 != 0)
-			if(ano % 400 == 0)
-				return true;
-
-		if(ano % 400 == 0)
-        	return true;
-		
 		return false;
 
 	}
+
+	
+	//Transforma data em formato texto para formato de data.
 
 	public static Date txtParaData(String txtData){
 		
@@ -341,6 +424,9 @@ public class Util{
         return data;
 	}
 
+	
+	//Transforma data em formato data para formato de texto.
+
 	public static String dataParaTxt(Date data){
 		
 		DateFormat fmt     = new SimpleDateFormat("dd/MM/yyyy");
@@ -356,6 +442,8 @@ public class Util{
 	}
 
 
+	//Transforma nota em formato texto para numero Float.
+
 	public static Float txtParaNota(String txtNota){
 		
 		Float nota = 0F;
@@ -367,9 +455,13 @@ public class Util{
 		return nota;
 	}
 
+	
+
+	//Valida nota informada, verificando se o 
+	//formato e a faixa de valores estão corretos.
+
 	public static Short validaNota(String nota){
 
-		//String expRegNota   = "\\d{0,3}([.]?|[,]?)\\d{0,2}";
 		String expRegNota   = "\\d+([.]?|[,]?)\\d*";
 
 		Float analisaNota = 0F;
@@ -384,6 +476,11 @@ public class Util{
 		return 0;
 	}
 
+	
+	
+
+	//Valida ID, verificando se o formato está correto.
+
 	public static Short validaID(String iD){
 
 		String expRegID   = "\\d+";
@@ -393,6 +490,12 @@ public class Util{
 		
 		return 0;
 	}
+
+	
+
+	//Apara valor númerico em formato texto
+	//eliminando zeros desnecessários à esquerda
+	//e à direita do número.
 
 	public static String trimNum(String sNum){
 
@@ -414,6 +517,13 @@ public class Util{
         return sNum;
 
 	}
+
+	
+	//Gera logo presente no menu principal da aplicação,
+	//sendo possível definir o espaçamento a esquerda do logo
+	//para exibição na tela.
+	//O parâmetro booleano random, poderá permitir a implementação de código 
+	//que randomiza os caracteres que formam o logotipo.
 
 	public static String logo(Integer espacoEsq, Boolean random){
 

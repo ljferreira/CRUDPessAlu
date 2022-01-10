@@ -1,0 +1,19 @@
+Para compilar a aplicação dentro da pasta CRUDPessAlu 
+no Prompt de Comando do Windows, com o Java JDK instalado 
+execute o seguinte commando:
+
+javac -d . *.java
+
+Para executar o aplicativo dentro da pasta CRUDPessAlu
+no Prompt de Comando do Windows, com o Java instalado 
+execute um dos seguintes commandos:
+
+CrudPessAlu
+
+ou
+
+CrudPessAlu.bat
+
+ou
+
+java br.com.ferreira.crudpessalu.CrudPessAlu

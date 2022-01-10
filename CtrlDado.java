@@ -1,3 +1,14 @@
+/**
+ * aplicação CRUD +praTi
+ * 
+ * Classe que controla o acesso, manipulação e pesquisa 
+ * de pessoas e alunos armazenados em array.
+ * 
+ *@author  Luciano J. Ferreira
+ *@version 1.00 12/2021 
+ */
+
+
 package br.com.ferreira.crudpessalu.controller;
 
 import br.com.ferreira.crudpessalu.model.*;
@@ -7,18 +18,22 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Collections;
-import java.util.Scanner;
+
 
 public class CtrlDado{
-	private static List<Pessoa>  lstPess       = new ArrayList<Pessoa>();
-	private static List<Integer> idPessLivre   = new ArrayList<Integer>();
-	private static Integer       idPess        = 0;
-	private static Boolean 		 reciclaIdPess = false;
+	private static List<Pessoa>  lstPess       = new ArrayList<Pessoa>();  //repositório de pessoas/alunos cadastrados
+	private static List<Integer> idPessLivre   = new ArrayList<Integer>(); //lista os IDs livres para reutilização se reciclaIdPess for verdadeiro
+	private static Integer       idPess        = 0;                        //contador de ID, mantém o último ID gerado
+	private static Boolean 		 reciclaIdPess = false;                    //indica se IDs livres (ex. quando objetos Pessoa são excluídos) podem ser
+														                   //reutilizados em novos cadastros - padrão é false
 	
+	//permite o acesso aos objetos Pessoa/Aluno cadastrados
 	public static List<Pessoa> listaPessoa(){
 		return lstPess;
 	}
 
+	//retorna uma lista com todos os objetos Pessoa/Aluno 
+	//cadastrados, que coincide com o nome informado ou parte dele 
 	public static List<Pessoa> pesqPorNome(String nome){
 		
 		List<Pessoa> lstPorNome = new ArrayList<Pessoa>();
@@ -30,6 +45,9 @@ public class CtrlDado{
 		return lstPorNome;
 	}
 
+	
+	//retorna uma lista com todos os objetos Pessoa/Aluno 
+	//cadastrados, que coincide com o telefone informado ou parte dele 
 	public static List<Pessoa> pesqPorFone(String fone){
 		
 		List<Pessoa> lstPorFone = new ArrayList<Pessoa>();
@@ -41,6 +59,8 @@ public class CtrlDado{
 		return lstPorFone;
 	}
 
+	
+	//retorna uma lista com todos os objetos Aluno 
 	public static List<Pessoa> pesqSoAluno(){
 
 		List<Pessoa> lstSoAluno = new ArrayList<Pessoa>();
@@ -52,6 +72,8 @@ public class CtrlDado{
 		return lstSoAluno;
 	}
 
+	
+	//retorna uma lista com todos as pessoas cadastradas que não são aluno(a)
 	public static List<Pessoa> pesqNaoAluno(){
 
 		List<Pessoa> lstNaoAluno = new ArrayList<Pessoa>();
@@ -63,6 +85,9 @@ public class CtrlDado{
 		return lstNaoAluno;
 	}
 
+	
+	//cadastra a Pessoa/Aluno no array lstPess, 
+	//solicitando a instanciação do objeto através da classe AcessoPessAlu
 	public static Boolean cadastraPessoa(String[] dadosCadastro){
 		
 		Pessoa        pessoa        = null;
@@ -75,7 +100,7 @@ public class CtrlDado{
 	                                          Util.txtParaData(dadosCadastro[4]));
         else
         	aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
-	                                         Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
+	                                         Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
 	                                         Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));
 
         if(pessoa != null){
@@ -92,6 +117,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//gera um ID para cada Pessoa/Aluno cadastrado
 	private static Integer getIdPess(){
 
 		
@@ -107,9 +134,12 @@ public class CtrlDado{
 		return idPessTemp;
 	}
 
+	
+	//atualiza a Pessoa/Aluno no array lstPess, 
+	//solicitando a classe AcessoPessAlu que atualize 
+	//as variáveis de instância dos objetos Pessoa/Aluno
 	public static Boolean atualizaPessoa(Pessoa pessAtulz, String[] dadosAtualiza){
-		Scanner sc = new Scanner(System.in);
-
+		
 		AcessoPessAlu acessoPessAlu = new AcessoPessAlu();
 
 		if(dadosAtualiza[5] == null)
@@ -128,12 +158,12 @@ public class CtrlDado{
 				return true;
 			}
 				
-
-		System.out.println("Chegou aqui!!! ID --> ");
-		sc.nextLine();
 		return false;
 	}
 
+	
+	//exclui o cadastro da Pessoa/Aluno com o ID informado
+	//remove o objeto respectivo da lista lstPess 
 	public static Boolean excluiPessoa(Integer idPess){
 
 		Boolean exclusao = false;
@@ -151,6 +181,8 @@ public class CtrlDado{
 		return exclusao;
 	}
 
+	
+	//pesquisa uma Pessoa/Aluno pelo ID específico
 	public static Pessoa pesqPessoaPorID(Integer idPess){
 
 		for(Pessoa pessoa : lstPess)
@@ -160,6 +192,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//pesquisa uma lista de Pessoa(s)/Aluno(S) por uma faixa de ID
 	public static List<Pessoa> pesqFaixaId(Integer inicioId, Integer fimId){
 
 		List<Pessoa> lstFxId = new ArrayList<Pessoa>();
@@ -172,6 +206,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//pesquisa uma lista de Pessoa(s)/Aluno(S) por um intervalo de data de nascimento
 	public static List<Pessoa> pesqFaixaDtNasc(Date inicioData, Date fimData){
 
 		List<Pessoa> lstFxDtNasc = new ArrayList<Pessoa>();
@@ -184,6 +220,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//pesquisa uma lista de Pessoa(s)/Aluno(S) por um intervalo de data de cadastro
 	public static List<Pessoa> pesqFaixaDtCad(Date inicioData, Date fimData){
 
 		List<Pessoa> lstFxDtCad = new ArrayList<Pessoa>();
@@ -196,6 +234,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//pesquisa uma lista de Pessoa(s)/Aluno(S) por um intervalo de data de atualização
 	public static List<Pessoa> pesqFaixaDtAtu(Date inicioData, Date fimData){
 
 		List<Pessoa> lstFxDtAtu = new ArrayList<Pessoa>();
@@ -208,6 +248,8 @@ public class CtrlDado{
 
 	}
 
+	
+	//pesquisa uma lista de Pessoa(s)/Aluno(S) por uma faixa de nota final
 	public static List<Pessoa> pesqFaixaNotaFinal(Float inicioNotaFinal, Float fimNotaFinal){
 
 		List<Pessoa> lstFxNtFinal = new ArrayList<Pessoa>();

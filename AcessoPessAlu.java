@@ -1,3 +1,16 @@
+/**
+ * aplicação CRUD +praTi
+ * 
+ * Classe AcessoPessAlu. 
+ * Faz a intermediação para a criação de
+ * objetos e modificação de seus atributos, 
+ * relacionados as classes Pessoa e Aluno.
+ * 
+ *@author  Luciano J. Ferreira
+ *@version 1.00 12/2021 
+ */
+
+
 package br.com.ferreira.crudpessalu.model;
 
 import java.util.Date;

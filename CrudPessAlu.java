@@ -1,3 +1,12 @@
+/**
+ * aplicação CRUD +praTi
+ * 
+ * Menu Principal
+ * 
+ *@author  Luciano J. Ferreira
+ *@version 1.00 12/2021 
+ */
+
 package br.com.ferreira.crudpessalu;
 
 import java.util.Scanner;
@@ -13,15 +22,13 @@ public class CrudPessAlu{
 		while(true){
 		
 			Util.limpaTela();
-			/*String[] opMenu = new String[]{"*** Selecione uma opção do menu ***\n", //Título do Menu
-			                               "\t1. Cadastrar\n\t2. Listar\n\t3. Atualizar\n\t4. Excluir\n\t5. Sair\n\n", //Opções do Menu
-			                               "1", "2", "3", "4", "5"}; //chaves de escolha do menu*/
-
+			
+			//Título do Menu  e suas opções, o método estático logo retorna uma representação gráfica baseada em caracteres ASCII
 			String[] opMenu = new String[]{"\n\n" + Util.logo(7, false) + "\n" +
 				                           "    **********************************************\n" + 
 			                               "    **   Digite um número de 1 a 5 e <enter>,   **\n" + 
 			                               "    **    para selecionar uma opção do menu     **\n" + 
-			                               "    **********************************************", //Título do Menu
+			                               "    **********************************************", 
 			                               "    +--------------------------------------------+\n"+
 			                               "    |                1. Cadastrar                |\n" + 
 			                               "    |                                            |\n" + 
@@ -32,7 +39,7 @@ public class CrudPessAlu{
 			                               "    |                4. Excluir                  |\n" + 
 			                               "    |                                            |\n" + 
 			                               "    |                5. Sair                     |\n" + 
-			                               "    +--------------------------------------------+\n", //Opções do Menu
+			                               "    +--------------------------------------------+\n", 
 			                               "1", "2", "3", "4", "5"}; //chaves de escolha do menu
 			
 			Integer opcao = Integer.parseInt(Util.menu(opMenu));

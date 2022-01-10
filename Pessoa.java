@@ -1,3 +1,18 @@
+/**
+ * aplicação CRUD +praTi
+ * 
+ * Classe Pessoa, com suas variáveis 
+ * de instância, construtor e métodos setters e getters.
+ * O construtor e os métodos setters tem acesso protegido.
+ * Permitindo que objetos da classe Pessoa somente sejam instanciados 
+ * e modificados pela classe AcessoPessAlu, que pertence ao mesmo 
+ * pacote da classe Pessoa.
+ * 
+ *@author  Luciano J. Ferreira
+ *@version 1.00 12/2021 
+ */
+
+
 package br.com.ferreira.crudpessalu.model;
 
 import java.util.Date;

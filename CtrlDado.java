@@ -95,25 +95,25 @@ public class CtrlDado{
   		AcessoPessAlu acessoPessAlu = new AcessoPessAlu();
 
   		if(dadosCadastro[5] == null)
-            		pessoa = acessoPessAlu.criaPessoa(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
-                                              		  Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
-                                                          Util.txtParaData(dadosCadastro[4]));
-        	else
-            		aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
-	                                         	 Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
-	                                         	 Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));
+            pessoa = acessoPessAlu.criaPessoa(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
+                                              Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
+                                              Util.txtParaData(dadosCadastro[4]));
+        else
+            aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
+	                                         Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
+	                                         Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));
 
-		if(pessoa != null){
-			lstPess.add(pessoa);
-			return true;
-		}
+        if(pessoa != null){
+        	lstPess.add(pessoa);
+        	return true;
+        }
 
-		if(aluno != null){
-			lstPess.add(aluno);
-			return true;
-		}
-
-		return false;
+        if(aluno != null){
+        	lstPess.add(aluno);
+        	return true;
+        }
+		
+        return false;
 
 	}
 
@@ -145,10 +145,10 @@ public class CtrlDado{
 		if(dadosAtualiza[5] == null)
   			pessAtulz = acessoPessAlu.atualizaPessoa(pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
   			                                         Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]));
-        	else
-            		pessAtulz = acessoPessAlu.atualizaAluno((Aluno) pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
-                                                     		 Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
-                                                     		 Util.txtParaNota(dadosAtualiza[5]));
+        else
+            pessAtulz  = acessoPessAlu.atualizaAluno((Aluno) pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
+                                                     Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
+                                                     Util.txtParaNota(dadosAtualiza[5]));
 
 
 		for(int pos = 0 ; pos < lstPess.size() ; pos++)

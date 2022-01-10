@@ -1,8 +1,8 @@
 /**
- * aplica√ß√£o CRUD +praTi
+ * aplicaÁ„o CRUD +praTi
  * 
- * Classe Util que possui m√©todos utilit√°rios est√°ticos,
- * permitindo a execu√ß√£o de tarefas comuns a execu√ß√£o da aplica√ß√£o.
+ * Classe Util que possui mÈtodos utilit·rios est·ticos,
+ * permitindo a execuÁ„o de tarefas comuns a execuÁ„o da aplicaÁ„o.
  * 
  *@author  Luciano J. Ferreira
  *@version 1.00 12/2021 
@@ -23,11 +23,11 @@ import br.com.ferreira.crudpessalu.controller.CtrlDado;
 
 public class Util{
 
-	//M√©todo que exibe e monitora a op√ß√£o escolhida do menu definido em 
+	//MÈtodo que exibe e monitora a opÁ„o escolhida do menu definido em 
 	//um array de String, onde o primeiro elemento do array define um  
-	//cabe√ßalho para o menu, o segundo elemento define a apar√™ncia do menu 
+	//cabeÁalho para o menu, o segundo elemento define a aparÍncia do menu 
 	//e os demais elementos as chaves de escolha do menu.
-	//Retorna a op√ß√£o escolhida (chave) como uma String.
+	//Retorna a opÁ„o escolhida (chave) como uma String.
 	
 	public static String menu(String[] opMenu){
 
@@ -60,8 +60,8 @@ public class Util{
 
 	
 	
-	//M√©todo que permite atualizar o conte√∫do da tela em modo texto
-	//por meio de uma String que fornece o conte√∫do a ser exibido, 
+	//MÈtodo que permite atualizar o conte˙do da tela em modo texto
+	//por meio de uma String que fornece o conte˙do a ser exibido, 
 	//evitando a rolagem da tela.
 	
 	public static void atualizaTela(String tela){
@@ -70,67 +70,70 @@ public class Util{
 	}
 
 	
-	//M√©todo que permite atualizar o conte√∫do da tela em modo texto
-	//por meio de uma String que fornece o conte√∫do a ser exibido, 
+	//MÈtodo que permite atualizar o conte˙do da tela em modo texto
+	//por meio de uma String que fornece o conte˙do a ser exibido, 
 	//evitando a rolagem da tela. Marcadores presentes na String tela
-	//identificados por @ seguidos por um √≠ndice de um array de 
-	//String[] substVar, substituem tais posi√ß√µes na String tela 
-	//pelo conte√∫do presente na posi√ß√£o do array substVar.
-	//(√∫til para a passagem de valores armazenados em vari√°veis 
-	//durante a entrada de dados pelo usu√°rio)
+	//identificados por @ seguidos por um Ìndice de um array de 
+	//String[] substVar, substituem tais posiÁıes na String tela 
+	//pelo conte˙do presente na posiÁ„o do array substVar.
+	//(˙til para a passagem de valores armazenados em vari·veis 
+	//durante a entrada de dados pelo usu·rio)
 
 	public static void atualizaTela(String tela, String[] substVar){
 		limpaTela();
 		int pos = 0;
-        	for(String posVar : substVar){
-			tela = tela.replace("@" + pos, posVar);
-			pos++;
+        for(String posVar : substVar){
+	        tela = tela.replace("@" + pos, posVar);
+	        pos++;
 		}
 		System.out.print(tela);
 	}
 
 	
 
-	//M√©todo que possui a mesma funcionalidade do anterior
-	//mas utilizando ArrayList para fornecer valores de vari√°veis 
-	//para substituir posi√ß√µes na String tela.
+	//MÈtodo que possui a mesma funcionalidade do anterior
+	//mas utilizando ArrayList para fornecer valores de vari·veis 
+	//para substituir posiÁıes na String tela.
 
 	public static void atualizaTela(String tela, List<String> substVar){
 		limpaTela();
 		int pos = 0;
-        	for(String posVar : substVar){
-			tela = tela.replace("@" + pos, posVar);
-			pos++;
+        for(String posVar : substVar){
+	        tela = tela.replace("@" + pos, posVar);
+	        pos++;
 		}
 		System.out.print(tela);
 	}
 
 	
 
-	//M√©todo que permite limpar a tela em modo texto.
+	//MÈtodo que permite limpar a tela em modo texto.
 
 	public static void limpaTela(){
+
 		try{
-        	    if (System.getProperty("os.name").contains("Windows"))
-		    	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-		    else
-		        Runtime.getRuntime().exec("clear");
-    		}
-    	  	catch(Exception e){
-    		    System.out.println(e.getMessage());
-    		}
+        
+        if (System.getProperty("os.name").contains("Windows"))
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        else
+            Runtime.getRuntime().exec("clear");
+    	}
+    	
+    	catch(Exception e){
+    		System.out.println(e.getMessage());
+    	}
 	}
 
 	
-	//O m√©todo seguinte permite a entrada e, a valida√ß√£o de dados 
-	//no momento em que s√£o informados pelo usu√°rio, em uma caixa de di√°logo.
-	//Os par√¢metros do m√©todo permitem que seja informado uma mensagem 
-	//para solicita√ß√£o do dado ao usu√°rio, um t√≠tulo para a caixa de di√°logo, 
-	//o tipo de valida√ß√£o a ser executada e um conte√∫do pr√©-existente para ser 
+	//O mÈtodo seguinte permite a entrada e, a validaÁ„o de dados 
+	//no momento em que s„o informados pelo usu·rio, em uma caixa de di·logo.
+	//Os par‚metros do mÈtodo permitem que seja informado uma mensagem 
+	//para solicitaÁ„o do dado ao usu·rio, um tÌtulo para a caixa de di·logo, 
+	//o tipo de validaÁ„o a ser executada e um conte˙do prÈ-existente para ser 
 	//exibido no campo de entrada do dado, respectivamente.
-	//Retorna uma String representado o dado fornecido pelo usu√°rio.
-	//Caso ocorra algum erro, a valida√ß√£o n√£o aceite o dado ou a entrada 
-	//seja cancelada pelo usu√°rio, retorna null.
+	//Retorna uma String representado o dado fornecido pelo usu·rio.
+	//Caso ocorra algum erro, a validaÁ„o n„o aceite o dado ou a entrada 
+	//seja cancelada pelo usu·rio, retorna null.
 
 	public static String entradaDado(String dadoMsg, String titulo, String tipoValidacao, String conteudo){
 
@@ -138,7 +141,7 @@ public class Util{
 		String   entradaDado;
 		Short    validaDado;
 		Integer  cancelOp       = -1;
-		Object[] botoesConfirm  = {"Sim", "N√£o"};
+		Object[] botoesConfirm  = {"Sim", "N„o"};
 		
 		while(true){
 			entradaDado = (String) JOptionPane.showInputDialog(null, dadoMsg, titulo, JOptionPane.QUESTION_MESSAGE, null, null, conteudo);
@@ -154,7 +157,7 @@ public class Util{
 							return entradaDado;
 						}
 						else{
-							JOptionPane.showMessageDialog(null, "Nome n√£o informado " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Nome n„o informado " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -164,7 +167,7 @@ public class Util{
 							return entradaDado;
 						}
 						else{
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -174,7 +177,7 @@ public class Util{
 							return entradaDado;
 						}
 						else{
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -185,19 +188,19 @@ public class Util{
 							return dataParaTxt(txtParaData(entradaDado));
 						}
 						if(validaDado == 1){
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 						if(validaDado == 3){
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado + "\nM√™s v√°lido √© de 01 a 12.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado + "\nMÍs v·lido È de 01 a 12.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 						if(validaDado == 4){
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado + "\nDia do m√™s n√£o √© v√°lido.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado + "\nDia do mÍs n„o È v·lido.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 						if(validaDado == 5){
-							JOptionPane.showMessageDialog(null, "O ano informado n√£o √© bissexto!!! " + entradaDado + "\nM√™s de fevereiro para este ano possui somente 28 dias.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "O ano informado n„o È bissexto!!! " + entradaDado + "\nMÍs de fevereiro para este ano possui somente 28 dias.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 						if(validaDado == 6){
-							JOptionPane.showMessageDialog(null, "Data inv√°lida " + entradaDado + "\nData informada √© superior ao dia de hoje.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Data inv·lida " + entradaDado + "\nData informada È superior ao dia de hoje.", "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -209,11 +212,11 @@ public class Util{
 							return entradaDado;
 						}
 						if(validaDado == 1){
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 						if(validaDado == 2){
-							JOptionPane.showMessageDialog(null, "Nota inv√°lida: " + entradaDado + ".\nNota m√≠nima deve ser 0, e a m√°xima 100.", 
-							                              "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Nota inv·lida: " + entradaDado + ".\nNota mÌnima deve ser 0, e a m·xima 100.", 
+							                                    "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -223,7 +226,7 @@ public class Util{
 							return entradaDado;
 						}
 						else{
-							JOptionPane.showMessageDialog(null, "Formato de dado inv√°lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Formato de dado inv·lido " + entradaDado, "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -233,9 +236,9 @@ public class Util{
 
 			}
 			else{
-				while(cancelOp == -1){                          //"Cancelar a opera√ß√£o de cadastro?
-					cancelOp = JOptionPane.showOptionDialog(null, "Cancelar esta opera√ß√£o?[enter]=Sim", "Cancela Opera√ß√£o", 
-							                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoesConfirm, botoesConfirm[0]);
+				while(cancelOp == -1){                          //"Cancelar a operaÁ„o de cadastro?
+					cancelOp = JOptionPane.showOptionDialog(null, "Cancelar esta operaÁ„o?[enter]=Sim", "Cancela OperaÁ„o", 
+							                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoesConfirm, botoesConfirm[0]);
 					if(cancelOp == 0)
 						return null;
 					if(cancelOp == 1){
@@ -249,10 +252,10 @@ public class Util{
 
 	
 
-	//processaDados aciona o m√©todo entradaDado passando 4 posi√ßoes de um array
-	//que armazena informa√ß√µes a serem utilizadas por entradaDado.
-	//Armazena a String retornada por processaDados na posi√ß√£o 3 do array 
-	//utilizado como argumento na chamada do m√©todo, retornando true.
+	//processaDados aciona o mÈtodo entradaDado passando 4 posiÁoes de um array
+	//que armazena informaÁıes a serem utilizadas por entradaDado.
+	//Armazena a String retornada por processaDados na posiÁ„o 3 do array 
+	//utilizado como argumento na chamada do mÈtodo, retornando true.
 	//Se entradaDado retornar null, retorna false.
 
 	public static Boolean processaDados(String[] dados){
@@ -270,12 +273,12 @@ public class Util{
 
 
 	
-	//Este m√©todo recebe um dado como String, 
-	//e uma ou mais express√µes regulares dentro 
+	//Este mÈtodo recebe um dado como String, 
+	//e uma ou mais expressıes regulares dentro 
 	//de outra String separadas por @.
-	//Em seguida testa o dado contra as express√µes,
-	//se o dado for v√°lido para alguma delas retorna true,
-	//caso n√£o valide em nenhuma delas retorna false.
+	//Em seguida testa o dado contra as expressıes,
+	//se o dado for v·lido para alguma delas retorna true,
+	//caso n„o valide em nenhuma delas retorna false.
 
 	public static Boolean validaDadoExpReg(String dado, String ExpReg){
 
@@ -292,7 +295,7 @@ public class Util{
 
 	
 	//Verifica se foi fornecido algum nome,
-	//se sim retorna 0, caso contr√°rio retorna 1.
+	//se sim retorna 0, caso contr·rio retorna 1.
 
 	public static Short validaNome(String nome){
 
@@ -310,7 +313,7 @@ public class Util{
 		String expRegFone = "[(]\\d{2}[)](\\d{4}|\\d{5})[-]\\d{4}";
 		
 		if(!validaDadoExpReg(fone, expRegFone))
-			return 1; //formato inv√°lido de telefone
+			return 1; //formato inv·lido de telefone
 		else
 			return 0;
 
@@ -324,7 +327,7 @@ public class Util{
 		String expRegFone = "[(]\\d{2}[)](\\d{4}|\\d{5})[-]\\d{4}@\\d{1,11}";
 		
 		if(!validaDadoExpReg(fone, expRegFone))
-			return 1; //formato inv√°lido de telefone
+			return 1; //formato inv·lido de telefone
 		else
 			return 0;
 
@@ -332,7 +335,7 @@ public class Util{
 
 	
 
-	//M√©todo para validar data fornecida.
+	//MÈtodo para validar data fornecida.
 
 	public static Short validaData(String data){
 
@@ -341,7 +344,7 @@ public class Util{
 		String[] hojeDiaMesAno = dataParaTxt(hoje).split("/");
 
 		if(!validaDadoExpReg(data, expRegData))
-			return 1; //formato inv√°lido de data
+			return 1; //formato inv·lido de data
 
 		String[] diaMesAno = data.replace("-", "/").split("/");
 		
@@ -384,8 +387,8 @@ public class Util{
 	}
 
 	
-	//Testa se o ano informado √© bissexto
-	//retornado true se verdadeiro e false caso cont√°rio.
+	//Testa se o ano informado È bissexto
+	//retornado true se verdadeiro e false caso cont·rio.
 
 	public static Boolean anoBissexto(Integer ano){
 		
@@ -410,15 +413,15 @@ public class Util{
 		
 		
 		DateFormat fmt  = new SimpleDateFormat("dd/MM/yyyy");
-		Date       data = null;
+        Date       data = null;
+        
+        try{
+            data = fmt.parse(txtData);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
-		try{
-		    data = fmt.parse(txtData);
-		}catch(Exception e){
-		    System.out.println(e.getMessage());
-		}
-
-        	return data;
+        return data;
 	}
 
 	
@@ -427,15 +430,15 @@ public class Util{
 	public static String dataParaTxt(Date data){
 		
 		DateFormat fmt     = new SimpleDateFormat("dd/MM/yyyy");
-		String     dataTxt = null;
+        String     dataTxt = null;
+        
+        try{
+            dataTxt = fmt.format(data);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
-		try{
-		    dataTxt = fmt.format(data);
-		}catch(Exception e){
-		    System.out.println(e.getMessage());
-		}
-
-		return dataTxt;
+        return dataTxt;
 	}
 
 
@@ -455,7 +458,7 @@ public class Util{
 	
 
 	//Valida nota informada, verificando se o 
-	//formato e a faixa de valores est√£o corretos.
+	//formato e a faixa de valores est„o corretos.
 
 	public static Short validaNota(String nota){
 
@@ -464,11 +467,11 @@ public class Util{
 		Float analisaNota = 0F;
 		
 		if(!validaDadoExpReg(nota, expRegNota))
-			return 1; //formato inv√°lido de nota
+			return 1; //formato inv·lido de nota
 		else{
 			analisaNota = Float.parseFloat(nota.replace(",", "."));
 			if(analisaNota < 0 || analisaNota > 100)
-				return 2; //valor inv√°lido de nota
+				return 2; //valor inv·lido de nota
 		}
 		return 0;
 	}
@@ -476,28 +479,28 @@ public class Util{
 	
 	
 
-	//Valida ID, verificando se o formato est√° correto.
+	//Valida ID, verificando se o formato est· correto.
 
 	public static Short validaID(String iD){
 
 		String expRegID   = "\\d+";
 
 		if(!validaDadoExpReg(iD, expRegID))
-			return 1; //formato inv√°lido de ID
+			return 1; //formato inv·lido de ID
 		
 		return 0;
 	}
 
 	
 
-	//Apara valor n√∫merico em formato texto
-	//eliminando zeros desnecess√°rios √† esquerda
-	//e √† direita do n√∫mero.
+	//Apara valor n˙merico em formato texto
+	//eliminando zeros desnecess·rios ‡ esquerda
+	//e ‡ direita do n˙mero.
 
 	public static String trimNum(String sNum){
 
 		String sNumAux = sNum;
-		Double dNum    = 0.0;
+		Double dNum = 0.0;
 		
 		if(sNum == null) return null;
 		
@@ -509,17 +512,17 @@ public class Util{
 			return sNumAux;
 		}
         
-		sNum = dNum.toString();
-		sNum = (sNum.endsWith(".0")) ? sNum.substring(0, sNum.length()-2).replace(".", ",") :sNum.replace(".", ",");
-		return sNum;
+        sNum = dNum.toString();
+        sNum = (sNum.endsWith(".0")) ? sNum.substring(0, sNum.length()-2).replace(".", ",") :sNum.replace(".", ",");
+        return sNum;
 
 	}
 
 	
-	//Gera logo presente no menu principal da aplica√ß√£o,
-	//sendo poss√≠vel definir o espa√ßamento a esquerda do logo
-	//para exibi√ß√£o na tela.
-	//O par√¢metro booleano random, poder√° permitir a implementa√ß√£o de c√≥digo 
+	//Gera logo presente no menu principal da aplicaÁ„o,
+	//sendo possÌvel definir o espaÁamento a esquerda do logo
+	//para exibiÁ„o na tela.
+	//O par‚metro booleano random, poder· permitir a implementaÁ„o de cÛdigo 
 	//que randomiza os caracteres que formam o logotipo.
 
 	public static String logo(Integer espacoEsq, Boolean random){

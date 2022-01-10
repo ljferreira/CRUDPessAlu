@@ -103,17 +103,17 @@ public class CtrlDado{
 	                                         	 Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
 	                                         	 Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));
 
-        if(pessoa != null){
-        	lstPess.add(pessoa);
-        	return true;
-        }
+		if(pessoa != null){
+			lstPess.add(pessoa);
+			return true;
+		}
 
-        if(aluno != null){
-        	lstPess.add(aluno);
-        	return true;
-        }
-		
-        return false;
+		if(aluno != null){
+			lstPess.add(aluno);
+			return true;
+		}
+
+		return false;
 
 	}
 

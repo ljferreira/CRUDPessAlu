@@ -213,7 +213,7 @@ public class Util{
 						}
 						if(validaDado == 2){
 							JOptionPane.showMessageDialog(null, "Nota inválida: " + entradaDado + ".\nNota mínima deve ser 0, e a máxima 100.", 
-							                                    "Erro de dado", JOptionPane.ERROR_MESSAGE);
+							                              "Erro de dado", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
@@ -235,7 +235,7 @@ public class Util{
 			else{
 				while(cancelOp == -1){                          //"Cancelar a operação de cadastro?
 					cancelOp = JOptionPane.showOptionDialog(null, "Cancelar esta operação?[enter]=Sim", "Cancela Operação", 
-							                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoesConfirm, botoesConfirm[0]);
+							                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoesConfirm, botoesConfirm[0]);
 					if(cancelOp == 0)
 						return null;
 					if(cancelOp == 1){

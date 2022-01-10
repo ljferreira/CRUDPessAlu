@@ -24,8 +24,8 @@ public class CtrlDado{
 	private static List<Pessoa>  lstPess       = new ArrayList<Pessoa>();  //repositório de pessoas/alunos cadastrados
 	private static List<Integer> idPessLivre   = new ArrayList<Integer>(); //lista os IDs livres para reutilização se reciclaIdPess for verdadeiro
 	private static Integer       idPess        = 0;                        //contador de ID, mantém o último ID gerado
-	private static Boolean 		 reciclaIdPess = false;                    //indica se IDs livres (ex. quando objetos Pessoa são excluídos) podem ser
-														                   //reutilizados em novos cadastros - padrão é false
+	private static Boolean       reciclaIdPess = false;                    //indica se IDs livres (ex. quando objetos Pessoa são excluídos) podem ser
+	                                                                       //reutilizados em novos cadastros - padrão é false
 	
 	//permite o acesso aos objetos Pessoa/Aluno cadastrados
 	public static List<Pessoa> listaPessoa(){

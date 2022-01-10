@@ -95,10 +95,10 @@ public class CtrlDado{
   		AcessoPessAlu acessoPessAlu = new AcessoPessAlu();
 
   		if(dadosCadastro[5] == null)
-  			pessoa = acessoPessAlu.criaPessoa(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
+            pessoa = acessoPessAlu.criaPessoa(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
                                               Util.txtParaData(dadosCadastro[2]),  Util.txtParaData(dadosCadastro[3]), 
                                               Util.txtParaData(dadosCadastro[4]));
-       else
+        else
             aluno  = acessoPessAlu.criaAluno(getIdPess(), dadosCadastro[0], dadosCadastro[1], 
 	                                         Util.txtParaData(dadosCadastro[2]), Util.txtParaData(dadosCadastro[3]), 
 	                                         Util.txtParaData(dadosCadastro[4]), Util.txtParaNota(dadosCadastro[5]));

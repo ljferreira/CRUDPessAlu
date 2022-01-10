@@ -144,11 +144,11 @@ public class CtrlDado{
 
 		if(dadosAtualiza[5] == null)
   			pessAtulz = acessoPessAlu.atualizaPessoa(pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
-  													 Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]));
+  			                                         Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]));
         else
         	pessAtulz  = acessoPessAlu.atualizaAluno((Aluno) pessAtulz, dadosAtualiza[0], dadosAtualiza[1], Util.txtParaData(dadosAtualiza[2]),  
-        											 Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
-        											 Util.txtParaNota(dadosAtualiza[5]));
+        	                                         Util.txtParaData(dadosAtualiza[3]), Util.txtParaData(dadosAtualiza[4]), 
+        	                                         Util.txtParaNota(dadosAtualiza[5]));
 
 
 		for(int pos = 0 ; pos < lstPess.size() ; pos++)
